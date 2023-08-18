@@ -1,0 +1,2 @@
+- 네이버 서치 애드: https://naver.github.io/searchad-apidoc/#/guides
+  - https://github.com/naver/searchad-apidoc/wiki/FAQ-stat

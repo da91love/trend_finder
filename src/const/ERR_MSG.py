@@ -1,0 +1,5 @@
+NO_CAT_FOUND_ERR_MSG = 'Add category manually: '
+FILE_SAVE_SUCCESS_MSG = 'Save file success: '
+BRAND_EXTRACT_FAIL_ERR_MSG = 'Brand extracting fails: '
+BRAND_EXTRACT_SUCCESS_MSG = 'Brand extracting successes: '
+CAT_EXTRACT_FAIL_ERR_MSG = 'Cat extracting fails: '

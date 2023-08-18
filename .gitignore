@@ -1,0 +1,10 @@
+# Default ignored files
+*.idea
+/shelf/
+/log/*.log
+!/log/
+/workspace.xml
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
