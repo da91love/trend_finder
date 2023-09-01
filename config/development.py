@@ -10,8 +10,8 @@ AUTH = {
 
         },
         'SHP_INSIGHT': {
-            'CLIENT_ID': '32tSE7nGsQ7DxtQklxuY',
-            'CLIENT_SECRET': '4NZjjvP9BR'
+            'CLIENT_ID': 'MBzH3e2phm06gbAGt7cr',
+            'CLIENT_SECRET': '_UhGh5Rzb4'
         },
     },
 

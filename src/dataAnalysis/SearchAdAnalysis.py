@@ -23,6 +23,15 @@ class SearchAdAnalysis():
 
         return qc_cnt
 
+    def get_qc_cnt(self):
+        data = self.tg_data["keywordList"][0]
+
+        pc_qc_cnt = data.get('monthlyPcQcCnt') if type(data.get('monthlyPcQcCnt')) == int else 10
+        mb_qc_cnt = data.get('monthlyMobileQcCnt') if type(data.get('monthlyMobileQcCnt')) == int else 10
+
+        qc_cnt = pc_qc_cnt + mb_qc_cnt
+
+        return qc_cnt
     def get_n_months_cnt(self, a_month_cnt, cnt_trend):
         try:
             if a_month_cnt and cnt_trend:
@@ -40,5 +49,24 @@ class SearchAdAnalysis():
 
         except Exception as e:
             raise e
+    def get_abs_num_trend(self, a_month_cnt, cnt_trend):
+        try:
+            if a_month_cnt and cnt_trend:
+                last_4_weeks_value_in_trend: list = cnt_trend[-4:]
+                sum_last_4_weeks_value = _.sum_by(last_4_weeks_value_in_trend, 'ratio')
+                cnt_by_one = a_month_cnt / sum_last_4_weeks_value if not sum_last_4_weeks_value == 0 else 0
 
+                abs_num_trend = []
+                for one_month_trend in cnt_trend:
+                    abs_num_trend.append({
+                        "period": one_month_trend['period'],
+                        "val": one_month_trend['ratio'] * cnt_by_one
+                    })
+
+                return abs_num_trend
+            else:
+                return []
+
+        except Exception as e:
+            raise e
 

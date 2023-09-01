@@ -2,7 +2,7 @@ import requests
 import json
 import logging
 import traceback
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import pydash as _
 
@@ -99,27 +99,8 @@ class NaverDataLabAPI():
                 res = response.json()
                 data = res['results'][0]['data']
 
-                # return 되지 않은 date에 대해선 0을 반환하도록 하는 로직 추가
-                # 금주 일요일 까지의 데이터만 취득하게 하므로 반환 데이터는 항상 시행 주보다 한주 저번주 월요일이 되어 6을 뺌
-                loop_date = (datetime.strptime(endDate, '%Y-%m-%d') - relativedelta(days=6))
-                start_date = datetime.strptime(startDate, '%Y-%m-%d')
-                res_as_dict = _.group_by(data, 'period')
-
-                while True:
-                    if loop_date <= start_date:
-                        break
-                    else:
-                        loop_date_as_str = loop_date.strftime('%Y-%m-%d')
-                        if not res_as_dict.get(loop_date_as_str):
-                            data.append({'period': loop_date_as_str, 'ratio': 0})
-
-                        loop_date -= relativedelta(weeks=1)
-
-                sorted_data = _.sort_by(data, 'period')
-
-                DateUtil.cut_by_year(sorted_data, 24)
-
-                return sorted_data
+                cleaned_data_by_date = self.__cleaning_data_by_date(startDate, endDate, timeUnit, data)
+                return cleaned_data_by_date
 
             else:
                 error_info = json.loads(response.text)
@@ -145,6 +126,77 @@ class NaverDataLabAPI():
         except NaverDataLabSearchTrendAPIQuaryOverCallError as e:
             logger.error(traceback.format_exc())
             raise e
+
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            raise e
+
+    def __cleaning_data_by_date(self, startDate: str, endDate: str, timeUnit: str, res_data):
+        try:
+            end_date_as_date = datetime.strptime(endDate, '%Y-%m-%d')
+            start_date_as_date = datetime.strptime(startDate, '%Y-%m-%d')
+
+            if timeUnit == "date":
+                loop_date = end_date_as_date
+                start_date = start_date_as_date
+
+                res_as_dict = _.group_by(res_data, 'period')
+
+                while True:
+                    if loop_date < start_date:
+                        break
+                    else:
+                        loop_date_as_str = loop_date.strftime('%Y-%m-%d')
+                        if not res_as_dict.get(loop_date_as_str):
+                            res_data.append({'period': loop_date_as_str, 'ratio': 0})
+
+                        loop_date -= relativedelta(days=1)
+
+                sorted_data = _.sort_by(res_data, 'period')
+
+                return sorted_data
+
+            if timeUnit == "week":
+                diff_end_date = (end_date_as_date.weekday() - 7) % 7
+                diff_start_date = (start_date_as_date.weekday() - 7) % 7
+
+                loop_date = end_date_as_date - timedelta(days=diff_end_date)
+                start_date = start_date_as_date - timedelta(days=diff_start_date)
+                res_as_dict = _.group_by(res_data, 'period')
+
+                while True:
+                    if loop_date < start_date:
+                        break
+                    else:
+                        loop_date_as_str = loop_date.strftime('%Y-%m-%d')
+                        if not res_as_dict.get(loop_date_as_str):
+                            res_data.append({'period': loop_date_as_str, 'ratio': 0})
+
+                        loop_date -= relativedelta(weeks=1)
+
+                sorted_data = _.sort_by(res_data, 'period')
+
+                return sorted_data
+
+            if timeUnit == "month":
+                loop_date = (end_date_as_date - relativedelta(months=1)).replace(day=1)
+                start_date = start_date_as_date.replace(day=1)
+
+                res_as_dict = _.group_by(res_data, 'period')
+
+                while True:
+                    if loop_date < start_date:
+                        break
+                    else:
+                        loop_date_as_str = loop_date.strftime('%Y-%m-%d')
+                        if not res_as_dict.get(loop_date_as_str):
+                            res_data.append({'period': loop_date_as_str, 'ratio': 0})
+
+                        loop_date -= relativedelta(months=1)
+
+                sorted_data = _.sort_by(res_data, 'period')
+
+                return sorted_data
 
         except Exception as e:
             logger.error(traceback.format_exc())
