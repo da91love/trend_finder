@@ -23,6 +23,17 @@ class SearchAdAnalysis():
 
         return qc_cnt
 
+    def add_qc_cnt(self):
+        data = self.tg_data["keywordList"]
+
+        for d in data:
+            pc_qc_cnt = d.get('monthlyPcQcCnt') if type(d.get('monthlyPcQcCnt')) == int else 10
+            mb_qc_cnt = d.get('monthlyMobileQcCnt') if type(d.get('monthlyMobileQcCnt')) == int else 10
+
+            d['qcCnt'] = pc_qc_cnt + mb_qc_cnt
+
+        return data
+
     def get_qc_cnt(self):
         data = self.tg_data["keywordList"][0]
 

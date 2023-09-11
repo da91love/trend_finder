@@ -29,7 +29,7 @@ logging.config.fileConfig(os.path.join(root_path, 'logging.ini'))
 logger = logging.getLogger('sLogger')
 
 
-def getRelKeywords(keyword):
+def getMonthlyQcCnt(keyword):
 
     try:
         # 계정 정보 import
@@ -42,12 +42,13 @@ def getRelKeywords(keyword):
             ## import Class
             Nsap = NaverSearchAdAPI(naver_search_ad_api_c_id, naver_search_ad_api_acs_license,naver_search_ad_api_scrt_key, URI['NAVER_SEARCH_AD']['KWT'])
 
-            # 네이버 검색 광고 연관검색어 후집
+            # 네이버 검색 광고 (절대검색량) 데이터 수집
             Nsap.add_keywords([keyword])
             nasap_r = Nsap.get_data()
-            keyword_list = nasap_r.get('keywordList')
+            Saa = SearchAdAnalysis(nasap_r)
+            qc_vol = Saa.get_qc_cnt()
 
-            return keyword_list
+            return qc_vol
 
         except Exception as e:
             logger.error(traceback.format_exc())
@@ -56,5 +57,5 @@ def getRelKeywords(keyword):
     except Exception as e:
         raise e
 
-a = getRelKeywords('포카리스웨트')
+a = getMonthlyQcCnt('포카리스웨트')
 print(a)
