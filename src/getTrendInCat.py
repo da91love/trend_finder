@@ -28,7 +28,7 @@ logging.config.fileConfig(os.path.join(root_path, 'logging.ini'))
 logger = logging.getLogger('sLogger')
 
 
-def app(input):
+def getTrendInCat(input):
     keyword, cat_code,start_date, end_date, period = input.values()
 
     try:
