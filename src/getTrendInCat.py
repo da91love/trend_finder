@@ -29,7 +29,7 @@ logger = logging.getLogger('sLogger')
 
 
 def getTrendInCat(input):
-    keyword, cat_code,start_date, end_date, period = input.values()
+    keyword, cat_code,start_date, end_date, period, gender, age = input.values()
 
     try:
         # 계정 정보 import
@@ -44,7 +44,7 @@ def getTrendInCat(input):
             # 쇼핑인사이트 카태고리 내 키워드별 트렌드 데이터 수집
             Ndla.add_keywords([{"name": keyword, "param": [keyword]}])
             Ndla.add_categories(cat_code)
-            api_r_ndla = Ndla.get_data(start_date, end_date, period)
+            api_r_ndla = Ndla.get_data(start_date, end_date, period, gender, age)
 
             return api_r_ndla
 
