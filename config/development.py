@@ -5,20 +5,20 @@ AUTH = {
     },
     'NAVER_DATALAB': {
         'SRC_TREND': {
-            'CLIENT_ID': 'P_LFX3HH4DYPq2ZEjaJ9',
-            'CLIENT_SECRET': '9ZEO7A17VB'
+            'CLIENT_ID': 'P1Ba565sblk5B_5bjc2N',
+            'CLIENT_SECRET': 'X4dChUhjvr'
 
         },
         'SHP_INSIGHT': {
-            'CLIENT_ID': 'MBzH3e2phm06gbAGt7cr',
-            'CLIENT_SECRET': '_UhGh5Rzb4'
+            'CLIENT_ID': '36OJY58jwWWPjzN7VceJ',
+            'CLIENT_SECRET': 't0UMdnUCWn'
         },
     },
 
     'NAVER_SEARCH': {
         'SHP': {
-            'CLIENT_ID': 'EoSlEeDTHg6OgD37omJi',
-            'CLIENT_SECRET': '_SJQSBqge2'
+            'CLIENT_ID': 'YqHRuvehgvF6qIetzaT6',
+            'CLIENT_SECRET': 'JZEsuQ5Jgt'
         }
     },
     'NAVER_SEARCH_AD': {

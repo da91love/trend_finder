@@ -56,5 +56,5 @@ def getRelKeywords(keyword):
     except Exception as e:
         raise e
 
-a = getRelKeywords('포카리스웨트')
+a = getRelKeywords('12grabs')
 print(a)
