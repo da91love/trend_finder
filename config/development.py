@@ -5,8 +5,8 @@ AUTH = {
     },
     'NAVER_DATALAB': {
         'SRC_TREND': {
-            'CLIENT_ID': 'qcuN_0zTNOLcYLvjzPiQ',
-            'CLIENT_SECRET': 'nO9zhU32lF'
+            'CLIENT_ID': 'P_LFX3HH4DYPq2ZEjaJ9',
+            'CLIENT_SECRET': '9ZEO7A17VB'
 
         },
         'SHP_INSIGHT': {
